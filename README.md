@@ -2,11 +2,11 @@
 
 # Arch Linux Beginning
 
-  I first [[Downloaded]] the iso from arch Linux by using the wiki, and using the first link in the United States mirror site. 
+  I first Downloaded the iso from arch Linux by using the wiki, and using the first link in the United States mirror site. 
 
 ## Downloaded
 
-  Next after downloading the iso I booted up VMware, and started the [[Install Process]]. after getting into arch Linux I when pressed enter to get into the install phase
+  Next after downloading the iso I booted up VMware, and started the Install Process. after getting into arch Linux I when pressed enter to get into the install phase
 
 ## Install Process
 
@@ -19,7 +19,7 @@ Version: Other Linux 5.x and later kernal 64-bit
 Name it Virtual Machine, 
 Disk capacity being 20 GB and give more memory of 2GB
 
-finally boot up and click enter to get into the [[Terminal of Linux]]
+finally boot up and click enter to get into the Terminal of Linux
 
 
 ## Terminal of Linux
