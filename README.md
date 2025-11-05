@@ -81,6 +81,7 @@ set a password for the administrator
 
 	 passwd
     (type new password)
+	
 ### Fourth
 -------------------------------------------------------
 
