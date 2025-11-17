@@ -1,5 +1,5 @@
-<a href="https://github.com/MasonCyber/Docker" target="_blank">
-    Click here to view my other project
+<a href="https://masoncyber.github.io/docker/" target="_blank">
+    View Project 2
 </a>
 
 
