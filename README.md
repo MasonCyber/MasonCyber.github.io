@@ -1,190 +1,108 @@
-<a href="https://masoncyber.github.io/docker/" target="_blank">
-    View Project 2
-</a>
 
 
+# Docker Lab
+ Step 1. Downloading Docker in your VM. 
+		I personally used fedora, but https://docs.docker.com/engine/install/ . Docker Docs have installation guides for  different sources.
 
-# Arch Linux Beginning
+## Step 2: Terminal
 
-  I first Downloaded the iso from arch Linux by using the wiki, and using the first link in the United States mirror site. 
+First you want to uninstall these packages, before you can install Docker Engine
 
-## Downloaded
+		sudo dnf remove docker \
+                  docker-client \
+                  docker-client-latest \
+                  docker-common \
+                  docker-latest \
+                  docker-latest-logrotate \
+                  docker-logrotate \
+                  docker-selinux \
+                  docker-engine-selinux \
+                  docker-engine
+				  
+Next, you want to set up the repository. To do so, implement these two lines of code
 
-  Next after downloading the iso I booted up VMware, and started the Install Process. after getting into arch Linux I when pressed enter to get into the install phase
+			sudo dnf -y install dnf-plugins-core
+			sudo dnf-3 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
 
-## Install Process
+After you want to now install the Docker packages, 
+To install the latest version run the commanded
 
-  
-On VMware, you create a new virtual machine, go to installer disc image file (iso): put the ISO you downloaded. 
-Next.
-Guest operating system: Linux
-Version: Other Linux 5.x and later kernal 64-bit
+		sudo dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+		
+Next you want to start you're Docker Engine by using the command
 
-Name it Virtual Machine, 
-Disk capacity being 20 GB and give more memory of 2GB
+		sudo systemctl enable --now docker	
 
-finally boot up and click enter to get into the Terminal of Linux
+For verification, you can run the command 
 
+		sudo docker run hello-world
+If you see a text blob of commands that says Hello from Docker! in it, you know your docker is installed successfully
 
-## Terminal of Linux
+## Step 3. Uptime Kuma
 
+From the options provided, that is not WordPress, I decided to use Uptime Kuma.
 
-### First
---------------------------------------------------------------------------
-In the terminal, you are going to partition the disk.
+In order to start your gonna want to make a a Uptime Kuma folder and cd into it
 
-	cfdisk /dev/sda. select gpt
+		mkdir -p ~/uptime-kuma
+		cd ~/uptime-kuma
+		
+After that is done, you are going to create the docker-compose.yml file. 
 
-On free space, make a new one with a size of 1M (this being your boot loader). You will also need to make the type BIOS boot
+In order to get into the file your going to have to nano into it
 
-Next select a new free space, give it 4G of memory and type of Linux Swap
+			nano docker-compose.yml
+			
+Next Paste this command into it
 
-Finally with all your free space make just click enter it will auto make into Linux filesystem. 
+	version: "3.9"
 
-After all this is done you need to go over in the options and Write partition table to disk.  
+	services:
+	  uptime-kuma:
+ 	   image: louislam/uptime-kuma:latest
+ 	   container_name: uptime-kuma
+ 	   volumes:
+ 	     - ./data:/app/data
+	    ports:
+	      - "3001:3001"
+  	  restart: unless-stopped
 
-After confirmations quit. 
+In order to write and exit, your going to 
+CTRL + O 
+Press Enter
+CTRL + X (leaving)
 
-### Second
-------------------------------------------------------
+Next it starting up Uptime Kuma, for some of these commands I needed to use "sudo" in order for them to work
 
-You will need to format the partitions
+		docker compose up -d
+		
+This should have a download followed up by it
 
-	 mkfs.ext4 /dev/sda3
+See if it is running
 
-		mkswap /dev/sda2
+			docker ps
+			
+You should see a port in called uptime-kuma, if not make sure to go back and see if all is installed
 
-		swapon -a (enabling the paritions)
-### Third
---------------------------------------------------------
 
-Next is mount the data partitions. The directory is already made
+## Step 4. On the Web
 
-	 cd /mnt
- in the mnt folder make the disk
- 
-	mount /dev/sda3 /mnt
+I personally used Firefox, but any internet browser should work. In the browser you are going have to put your vm_ip into it. 
 
-next copy the system files to the mnt folder
+To find you Ip you can run the command 
 
-put the  s: 
+			ip route get 1.1.1.1
+			
+You will get a text line, the VM's IP is after the letters src
 
-	pacstrap /mnt base linux linux-firmware nano grub dhcpcd
+Next go onto your web browser 
 
-(time to download these might take a little bit)
+			Type in : http://vm_ip:3001
+			
+You will be brought up the Uptime Kuma website, make an admin account with whatever username and password, and your done!
 
-Need to now generate the fstab file
 
-	 genfstab /mnt >> /mnt/etc/fstab
-
-mnt directory now needs to be the root 
-
-	  arch-chroot /mnt
-
-set a password for the administrator
-
-	 passwd
-    (type new password)
-	
-### Fourth
--------------------------------------------------------
-
-Now we need to install grub
-
-	 grub-install /dev/sda
-
-configure grub now
-
-	 grub-mkconf ig -o /boot/grub/grub.cfg
-
-now you need to exit and reboot
-
-	exit
-
-	reboot
-
-Now you have the grub boot loader. log in as root, with your password you set early
-
-### Fifth
---------------------------------------------------------
-
-
-Now we need to make network connectivity  
-
-First test it by 
-
-	 ping -c 2 archlinux.org
-
-Next now to fix it by putting in 
-
-	 systemctl start dhcpcd
-
-now wait a few seconds.
-
-try to ping again
-
-		  -c 2 archlinux.org 
-
-
-If that works, we need to now enable it 
-
-		 Systemctl enable dhcpcd
-
-### Sixth
---------------------------------------------------------
-
-Now to configure Pacman type the 
-
-	 nano /etc/pacman.conf
-
-You will be brought up a new terminal tab. Scroll all the way down to the bottom, you will see 
-
-	"#[multilib]"
-	"#Include = /ect/pacman.d/mirrorlist"
-
-Get rid of the hashtags of those two.
-It Should look like this 
-
-    [multilib]
-	  Include = /ect/pacman.d/mirrorlist
-
-now CTRL X, and exit and save
-
-Now when your back to the main terminal 
-
-type the the   to redownload all package database files
-
-		  pacman -Syy
-
-Now it is done, We can now ssh!
-
-	 systemctl start sshd
-	 systemctl enable sshd
-
-Now add a user!
-
-	 useradd -m (your username)
-
-	passwd (your username)
-
-type in password
-
-now ssh to your user!
-
-	 ssh (yourusername)@localhost
-
-To you are longed into your user!
-
-
-If you want to download a desktop environment you can do so! Now for example if you want to download gnome all you need to do is
-
-		 pacman-s gnome dgm
-
-then
-
-		systemclt enable dgm (which is gnome)
-
-now the next time you reboot you can go into your desktop environment. 
+		
 
 
 
