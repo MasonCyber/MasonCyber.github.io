@@ -45,7 +45,7 @@ You will need to format the partitions
 
 	swapon -a (enabling the paritions) 
 
-### third 
+### Third 
 
 Next is mount the data partitions. The directory is already made
 
