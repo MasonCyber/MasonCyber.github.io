@@ -1,14 +1,14 @@
-MasonCyber
+# MasonCyber
 
-Arch Linux Beginning
+## Arch Linux Beginning
 
 I first Downloaded the iso from arch Linux by using the wiki, and using the first link in the United States mirror site.
 
-Downloaded
+## Downloaded
 
 Next after downloading the iso I booted up VMware, and started the Install Process. after getting into arch Linux I when pressed enter to get into the install phase
 
-Install Process
+## Install Process
 
 On VMware, you create a new virtual machine, go to installer disc image file (iso): put the ISO you downloaded. Next. Guest operating system: Linux Version: Other Linux 5.x and later kernal 64-bit
 
@@ -16,9 +16,9 @@ Name it Virtual Machine, Disk capacity being 20 GB and give more memory of 2GB
 
 Finally boot up and click enter to get into the Terminal of Linux
 
-Terminal of Linux
+## Terminal of Linux
 
-First
+#### First
 
 In the terminal, you are going to partition the disk.
 
@@ -35,7 +35,7 @@ After all this is done you need to go over in the options and Write partition ta
 
 After confirmations quit.
 
-Second
+#### Second
 
 You will need to format the partitions
 
@@ -43,8 +43,9 @@ You will need to format the partitions
 
 	mkswap /dev/sda2
 
-	swapon -a (enabling the paritions) ### Third --------------------------------------------------------
+	swapon -a (enabling the paritions) 
 
+### third 
 
 Next is mount the data partitions. The directory is already made
 
@@ -76,7 +77,7 @@ set a password for the administrator
 	passwd (type new password)
 
 
-Fourth
+### Fourth
 
 Now we need to install grub
 
@@ -96,7 +97,7 @@ reboot
 
 Now you have the grub boot loader. log in as root, with your password you set early
 
-Fifth
+### Fifth
 
 Now we need to make network connectivity
 
@@ -120,8 +121,7 @@ If that works, we need to now enable it
 
 	 Systemctl enable dhcpcd
 
-
-Sixth
+### Sixth
 
 Now to configure Pacman type the
 
