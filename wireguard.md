@@ -1,5 +1,3 @@
-WireGuard Lab
-
 
 I used Ubuntu as my distro of choice. 
 
@@ -54,24 +52,24 @@ Copy and paste text into docker-compose.yml
 	
 version: "3.8"
 services:
-  wireguard:
-    image: linuxserver/wireguard
-    container_name: wireguard
-    cap_add:
-      - NET_ADMIN
-      - SYS_MODULE
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=America/Chicago
-      - SERVERURL=<157.230.140.219>
-      - SERVERPORT=51820
-      - PEERS=2
-    volumes:
-      - ./config:/config
-    ports:
-      - 51820:51820/udp
-    restart: unless-stopped
+  wireguard:
+    image: linuxserver/wireguard
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Chicago
+      - SERVERURL=<157.230.140.219>
+      - SERVERPORT=51820
+      - PEERS=2
+    volumes:
+      - ./config:/config
+    ports:
+      - 51820:51820/udp
+    restart: unless-stopped
 
 Then run the command:
 
@@ -80,3 +78,4 @@ Then run the command:
 Finally test the VPN with QR code so you can do it on mobile device
 
 Showing IP before then with Wireguard on.
+
